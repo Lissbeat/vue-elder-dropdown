@@ -1,0 +1,40 @@
+{
+  "name": "vue-elder-dropdown",
+  "version": "0.0.0-development",
+  "description": "Dropdown component for vue-elder",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"No tests yet\"",
+    "semantic-release": "semantic-release"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ElderAS/vue-elder-dropdown.git"
+  },
+  "keywords": [
+    "component",
+    "dropdown",
+    "elder",
+    "vue"
+  ],
+  "author": "carsten@elder.no",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ElderAS/vue-elder-dropdown/issues"
+  },
+  "homepage": "https://github.com/ElderAS/vue-elder-dropdown#readme",
+  "devDependencies": {
+    "cz-conventional-changelog": "^3.0.2",
+    "semantic-release-cli": "^5.2.3",
+    "semantic-release": "^17.0.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.0.1",
+    "npm": "^6.13.6"
+  }
+}
