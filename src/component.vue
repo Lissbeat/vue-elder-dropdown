@@ -45,6 +45,7 @@ export default {
     init() {
       this.visible = true
       this.$nextTick(() => {
+        if (!this.$refs.element || !this.$refs.target) return (this.visible = false)
         this.instance = createPopper(this.$refs.element, this.$refs.target, {
           placement: this.placement,
           modifiers: [
