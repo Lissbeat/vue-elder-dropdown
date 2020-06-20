@@ -101,7 +101,7 @@ export default {
   &__content {
     position: absolute;
     box-shadow: 0 5px 30px -5px rgba(0, 0, 0, 0.2);
-    border-radius: var(--vue-elder-border-radius);
+    border-radius: GetVariable('border-radius');
     overflow: hidden;
     font-size: 0.8em;
 
