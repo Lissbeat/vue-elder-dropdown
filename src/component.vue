@@ -79,9 +79,13 @@ export default {
 </script>
 
 <style lang="scss">
-.elder-dropdown {
-  @import './variables.scss';
+@import './main.scss';
 
+:root {
+  @include GenerateVariables();
+}
+
+.elder-dropdown {
   position: relative;
   display: flex;
 
@@ -97,7 +101,7 @@ export default {
   &__content {
     position: absolute;
     box-shadow: 0 5px 30px -5px rgba(0, 0, 0, 0.2);
-    border-radius: $border-radius;
+    border-radius: GetVariable('border-radius');
     overflow: hidden;
     font-size: 0.8em;
 
