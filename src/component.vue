@@ -79,10 +79,12 @@ export default {
 </script>
 
 <style lang="scss">
-@import './main.scss';
+$variables: (
+  'border-radius': 3px,
+);
 
-:root {
-  @include GenerateVariables();
+@function GetVariable($key) {
+  @return var(--vue-elder-#{$key}, map-get($variables, $key));
 }
 
 .elder-dropdown {
