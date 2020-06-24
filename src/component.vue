@@ -87,11 +87,13 @@ export default {
 
 .elder-dropdown {
   position: relative;
+
   display: flex;
 
   &--inactive .elder-dropdown__content {
-    pointer-events: none;
     visibility: hidden;
+
+    pointer-events: none;
   }
 
   &__trigger {
@@ -99,20 +101,23 @@ export default {
   }
 
   &__content {
-    position: absolute;
-    box-shadow: 0 5px 30px -5px rgba(0, 0, 0, 0.2);
-    border-radius: GetVariable('border-radius');
-    overflow: hidden;
     font-size: 0.8em;
 
+    position: absolute;
+
     display: flex;
+    overflow: hidden;
     flex-direction: column;
+
+    border-radius: GetVariable('border-radius');
     background-color: white;
+    box-shadow: 0 5px 30px -5px rgba(0, 0, 0, 0.2);
 
     & > * {
-      border-radius: 0;
-      border: none;
       text-align: left;
+
+      border: none;
+      border-radius: 0;
     }
   }
 }
