@@ -1,6 +1,11 @@
 <template lang="html">
-  <div class="elder-dropdown" :class="{ 'elder-dropdown--inactive': !instance }">
-    <div class="elder-dropdown__trigger" ref="element" @click="toggle">
+  <div
+    class="elder-dropdown"
+    :class="{ 'elder-dropdown--inactive': !instance }"
+    @mouseover="onMouseOver"
+    @mouseleave="onMouseLeave"
+  >
+    <div class="elder-dropdown__trigger" ref="element" @click="onClick">
       <slot />
     </div>
     <div
@@ -9,7 +14,9 @@
       class="elder-dropdown__content"
       @click="closeOnClick && toggle()"
     >
-      <slot name="dropdown" :close="toggle"></slot>
+      <div class="elder-dropdown__content-box">
+        <slot name="dropdown" :close="toggle"></slot>
+      </div>
     </div>
   </div>
 </template>
@@ -23,6 +30,11 @@ export default {
       type: String,
       default: 'bottom-end',
     },
+    trigger: {
+      type: String,
+      default: 'click',
+      enum: ['click', 'hover'],
+    },
     closeOnClick: {
       type: Boolean,
       default: true,
@@ -35,9 +47,24 @@ export default {
     }
   },
   methods: {
-    toggle: function () {
+    toggle: function (state) {
+      if (state) return this.init()
+      if (state === false) return this.destroy()
+
       if (this.instance) return this.destroy()
       return this.init()
+    },
+    onClick() {
+      if (this.trigger !== 'click') return
+      this.toggle()
+    },
+    onMouseOver: function () {
+      if (this.trigger !== 'hover') return
+      this.toggle(true)
+    },
+    onMouseLeave: function () {
+      if (this.trigger !== 'hover') return
+      this.toggle(false)
     },
     clickAway: function (e) {
       if (!this.$el.contains(e.target)) this.toggle()
@@ -52,7 +79,7 @@ export default {
             {
               name: 'offset',
               options: {
-                offset: [0, 8],
+                offset: [0, 0],
               },
             },
           ],
@@ -100,20 +127,24 @@ $variables: (
 
   &__trigger {
     display: inherit;
+    width: 100%;
   }
 
   &__content {
     font-size: 0.8em;
 
     position: absolute;
+    padding-top: 8px;
 
-    display: flex;
-    overflow: hidden;
-    flex-direction: column;
+    &-box {
+      display: flex;
+      overflow: hidden;
+      flex-direction: column;
 
-    border-radius: GetVariable('border-radius');
-    background-color: white;
-    box-shadow: 0 5px 30px -5px rgba(0, 0, 0, 0.2);
+      border-radius: GetVariable('border-radius');
+      background-color: white;
+      box-shadow: 0 5px 30px -5px rgba(0, 0, 0, 0.2);
+    }
 
     & > * {
       text-align: left;
