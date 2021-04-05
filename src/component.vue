@@ -8,21 +8,24 @@
     <div class="elder-dropdown__trigger" ref="element" @click="onClick">
       <slot />
     </div>
-    <div
-      v-if="visible"
-      ref="target"
-      class="elder-dropdown__content"
-      @click="closeOnClick && toggle()"
-    >
-      <div class="elder-dropdown__content-box">
-        <slot name="dropdown" :close="toggle"></slot>
+    <Portal>
+      <div
+        v-if="visible"
+        ref="target"
+        class="elder-dropdown__content"
+        @click="closeOnClick && toggle()"
+      >
+        <div class="elder-dropdown__content-box">
+          <slot name="dropdown" :close="toggle"></slot>
+        </div>
       </div>
-    </div>
+    </Portal>
   </div>
 </template>
 
 <script>
 import { createPopper } from '@popperjs/core'
+import { Portal } from '@linusborg/vue-simple-portal'
 
 export default {
   props: {
@@ -71,7 +74,7 @@ export default {
     },
     init() {
       this.visible = true
-      this.$nextTick(() => {
+      setTimeout(() => {
         if (!this.$refs.element || !this.$refs.target) return (this.visible = false)
         this.instance = createPopper(this.$refs.element, this.$refs.target, {
           placement: this.placement,
@@ -84,7 +87,7 @@ export default {
             },
           ],
         })
-      })
+      }, 0)
     },
     destroy() {
       if (!this.instance) return
@@ -101,6 +104,9 @@ export default {
   },
   beforeDestroy() {
     this.destroy()
+  },
+  components: {
+    Portal,
   },
 }
 </script>
