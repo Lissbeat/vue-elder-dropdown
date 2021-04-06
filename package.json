@@ -34,7 +34,6 @@
     }
   },
   "dependencies": {
-    "@linusborg/vue-simple-portal": "^0.1.5",
     "@popperjs/core": "^2.0.1"
   }
 }

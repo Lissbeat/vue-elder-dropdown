@@ -8,7 +8,7 @@
     <div class="elder-dropdown__trigger" ref="element" @click="onClick">
       <slot />
     </div>
-    <Portal>
+    <component :is="dropdownWrapper" class="elder-dropdown__wrapper">
       <div
         v-if="visible"
         ref="target"
@@ -19,13 +19,12 @@
           <slot name="dropdown" :close="toggle"></slot>
         </div>
       </div>
-    </Portal>
+    </component>
   </div>
 </template>
 
 <script>
 import { createPopper } from '@popperjs/core'
-import { Portal } from '@linusborg/vue-simple-portal'
 
 export default {
   props: {
@@ -41,6 +40,10 @@ export default {
     closeOnClick: {
       type: Boolean,
       default: true,
+    },
+    dropdownWrapper: {
+      type: [Function, String],
+      default: 'div',
     },
   },
   data() {
@@ -104,9 +107,6 @@ export default {
   },
   beforeDestroy() {
     this.destroy()
-  },
-  components: {
-    Portal,
   },
 }
 </script>
