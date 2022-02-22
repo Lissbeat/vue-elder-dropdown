@@ -1,5 +1,6 @@
 <template lang="html">
   <div
+    v-if="$slots.dropdown && $slots.dropdown.length"
     class="elder-dropdown"
     :class="{ 'elder-dropdown--inactive': !instance }"
     @mouseover="onMouseOver"
@@ -113,7 +114,7 @@ export default {
 
 <style lang="scss">
 $variables: (
-  'border-radius': 3px,
+  "border-radius": 3px
 );
 
 @function GetVariable($key) {
@@ -147,16 +148,16 @@ $variables: (
       overflow: hidden;
       flex-direction: column;
 
-      border-radius: GetVariable('border-radius');
+      border-radius: GetVariable("border-radius");
       background-color: white;
       box-shadow: 0 5px 30px -5px rgba(0, 0, 0, 0.2);
-    }
 
-    & > * {
-      text-align: left;
+      & > * {
+        text-align: left;
 
-      border: none;
-      border-radius: 0;
+        border: none;
+        border-radius: 0px;
+      }
     }
   }
 }
