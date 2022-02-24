@@ -1,6 +1,6 @@
 <template lang="html">
   <div
-    v-if="$slots.dropdown && $slots.dropdown.length"
+    v-if="hasItems"
     class="elder-dropdown"
     :class="{ 'elder-dropdown--inactive': !instance }"
     @mouseover="onMouseOver"
@@ -52,6 +52,14 @@ export default {
       visible: false,
       instance: null,
     }
+  },
+  computed: {
+    hasItems() {
+      return (
+        (this.$slots.dropdown && this.$slots.dropdown.length) ||
+        (this.$scopedSlots.dropdown && this.$scopedSlots.dropdown())
+      )
+    },
   },
   methods: {
     toggle: function (state) {
@@ -114,7 +122,7 @@ export default {
 
 <style lang="scss">
 $variables: (
-  "border-radius": 3px
+  'border-radius': 3px,
 );
 
 @function GetVariable($key) {
@@ -148,7 +156,7 @@ $variables: (
       overflow: hidden;
       flex-direction: column;
 
-      border-radius: GetVariable("border-radius");
+      border-radius: GetVariable('border-radius');
       background-color: white;
       box-shadow: 0 5px 30px -5px rgba(0, 0, 0, 0.2);
 
