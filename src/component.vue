@@ -1,6 +1,6 @@
 <template lang="html">
   <div
-    v-if="hasItems"
+    v-show="!isEmpty"
     class="elder-dropdown"
     :class="{ 'elder-dropdown--inactive': !instance }"
     @mouseover="onMouseOver"
@@ -11,12 +11,12 @@
     </div>
     <component :is="dropdownWrapper" class="elder-dropdown__wrapper">
       <div
-        v-if="visible"
+        v-show="visible"
         ref="target"
         class="elder-dropdown__content"
         @click="closeOnClick && toggle()"
       >
-        <div class="elder-dropdown__content-box">
+        <div class="elder-dropdown__content-box" ref="observer">
           <slot name="dropdown" :close="toggle"></slot>
         </div>
       </div>
@@ -51,15 +51,9 @@ export default {
     return {
       visible: false,
       instance: null,
+      isEmpty: false,
+      observer: null
     }
-  },
-  computed: {
-    hasItems() {
-      return (
-        (this.$slots.dropdown && this.$slots.dropdown.length) ||
-        (this.$scopedSlots.dropdown && this.$scopedSlots.dropdown())
-      )
-    },
   },
   methods: {
     toggle: function (state) {
@@ -83,6 +77,11 @@ export default {
     },
     clickAway: function (e) {
       if (!this.$el.contains(e.target)) this.toggle()
+    },
+    setIsEmpty() {
+      const checkForContent = (n) => n.tag || (n.text && n.text.trim())
+      const content = this.$scopedSlots.dropdown() || this.$slots.dropdown || []
+      this.isEmpty = !content.some(checkForContent)
     },
     init() {
       this.visible = true
@@ -115,14 +114,25 @@ export default {
     },
   },
   beforeDestroy() {
+    this.observer.disconnect()
     this.destroy()
   },
+  mounted() {
+    this.observer = new MutationObserver(() => {
+      this.setIsEmpty()
+    })
+
+    this.$nextTick(() => {
+      this.setIsEmpty()
+      this.observer.observe(this.$refs.observer, { childList: true })
+    })
+  }
 }
 </script>
 
 <style lang="scss">
 $variables: (
-  'border-radius': 3px,
+  "border-radius": 3px
 );
 
 @function GetVariable($key) {
@@ -156,7 +166,7 @@ $variables: (
       overflow: hidden;
       flex-direction: column;
 
-      border-radius: GetVariable('border-radius');
+      border-radius: GetVariable("border-radius");
       background-color: white;
       box-shadow: 0 5px 30px -5px rgba(0, 0, 0, 0.2);
 
