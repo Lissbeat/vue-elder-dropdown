@@ -17,7 +17,7 @@
         @click="closeOnClick && toggle()"
       >
         <div class="elder-dropdown__content-box" ref="observer">
-          <slot name="dropdown" :close="toggle"></slot>
+          <slot name="dropdown" :close="toggle" :visible="visible"></slot>
         </div>
       </div>
     </component>
@@ -52,7 +52,7 @@ export default {
       visible: false,
       instance: null,
       isEmpty: false,
-      observer: null
+      observer: null,
     }
   },
   methods: {
@@ -126,13 +126,13 @@ export default {
       this.setIsEmpty()
       this.observer.observe(this.$refs.observer, { childList: true })
     })
-  }
+  },
 }
 </script>
 
 <style lang="scss">
 $variables: (
-  "border-radius": 3px
+  'border-radius': 3px,
 );
 
 @function GetVariable($key) {
@@ -166,7 +166,7 @@ $variables: (
       overflow: hidden;
       flex-direction: column;
 
-      border-radius: GetVariable("border-radius");
+      border-radius: GetVariable('border-radius');
       background-color: white;
       box-shadow: 0 5px 30px -5px rgba(0, 0, 0, 0.2);
 
