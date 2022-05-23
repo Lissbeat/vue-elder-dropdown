@@ -1,8 +1,7 @@
 <template lang="html">
   <div
-    v-show="!isEmpty"
     class="elder-dropdown"
-    :class="{ 'elder-dropdown--inactive': !instance }"
+    :class="{ 'elder-dropdown--inactive': !instance, 'elder-dropdown--hidden': isEmpty }"
     @mouseover="onMouseOver"
     @mouseleave="onMouseLeave"
   >
@@ -79,9 +78,7 @@ export default {
       if (!this.$el.contains(e.target)) this.toggle()
     },
     setIsEmpty() {
-      const checkForContent = (n) => n.tag || (n.text && n.text.trim())
-      const content = this.$scopedSlots.dropdown() || this.$slots.dropdown || []
-      this.isEmpty = !content.some(checkForContent)
+      this.isEmpty = !Boolean(this.$refs.observer.children.length)
     },
     init() {
       this.visible = true
@@ -148,6 +145,10 @@ $variables: (
     visibility: hidden;
 
     pointer-events: none;
+  }
+
+  &--hidden {
+    display: none;
   }
 
   &__trigger {
