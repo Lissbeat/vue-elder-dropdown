@@ -42,7 +42,7 @@ export default {
       default: true,
     },
     dropdownWrapper: {
-      type: [Function, String],
+      type: [Object, Function, String],
       default: 'div',
     },
   },
