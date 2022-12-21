@@ -82,6 +82,7 @@ export default {
     },
     init() {
       this.visible = true
+      this.$emit('visible')
       setTimeout(() => {
         if (!this.$refs.element || !this.$refs.target) return (this.visible = false)
         this.instance = createPopper(this.$refs.element, this.$refs.target, {
@@ -102,6 +103,7 @@ export default {
       this.instance.destroy()
       this.instance = null
       this.visible = false
+      this.$emit('hidden')
     },
   },
   watch: {
